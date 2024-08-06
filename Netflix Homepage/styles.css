@@ -1,0 +1,148 @@
+body {
+    background-color: black;
+}
+/* Start of the description part! */
+.header-styles {
+    background-image: url(./header-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.nav-btn {
+    background-color: red;
+}
+.nav-btn:hover {
+    background-color: rgb(214, 26, 26);
+}
+.heading {
+    font-size: 45px;
+    font-weight: bold;
+}
+.input-container {
+    width: 80%;
+}
+
+.email-input, .email-input:focus, .email-label:focus {
+    background: rgb(0 0 0 / 40%);
+    color: white;
+    border: none;
+    box-shadow: none;
+    border: 1px solid gray;
+    padding: 24px 16px 8px 16px;
+}
+
+.email-input:focus {
+    outline: 2px solid whitesmoke;
+    outline-offset: 2px;
+}
+
+.desc-btn {
+    background-color: red;
+    font-size: 20px;
+    height: 100%;
+}
+.desc-btn:hover {
+    background-color: rgb(214, 26, 26);
+}
+/* End of the heading section */
+
+
+/* start of the Enjoy on your TV section */
+.enjoy-on-tv, .download-section, .watch-section, .kid-section, .question-section, .footer-section {
+ border-top: 10px solid rgb(78, 76, 76);
+ padding-bottom: 50px;
+}
+.tv-container {
+    position: relative;
+}
+.tv-image {
+    width: 100%;
+}
+.tv-video {
+    z-index: -1;
+    position: absolute;
+    top: 10%; 
+    left: 10%;
+    width: 80%;
+    height: 80%;
+}
+
+/* start of the Download section */
+.mobile-container {
+    position: relative;
+}
+
+.over-img-section {
+    padding: 5px 10px;
+    position: relative;
+    bottom: 100px;
+    background-color: black;
+    border: 2px solid rgb(78, 76, 76);
+    border-radius: 20px;
+}
+
+/* End of the Download Section */
+
+/* Start of the Watch Section */
+.computer-container {
+    position: relative;
+}
+
+.computer-video {
+    z-index: -1;
+    position: absolute; 
+    left: 20%;
+    width: 60%;
+    height: 70%;
+}
+/* End of the watch section */
+
+/* start of kid profile section */
+.kid-section {
+    padding: 80px 0;
+}
+
+/* End of kid profile section */
+
+/* start of question section */
+.question-section {
+    padding-top: 40px;
+}
+
+.content {
+    display: none;
+    padding: 0 13px;
+}
+
+.list-group-container {
+    border-radius: 0;
+}
+
+/* End of question section */
+
+/* Start of the footer section */
+
+#select-language {
+    padding: 6px 36px;
+    color: white;
+    background: rgb(49, 47, 47);
+    border-radius: 2px;
+}
+
+#select-language:focus {
+    outline: 1px solid whitesmoke;
+    outline-offset: 1px;
+}
+
+.select-container {
+    position: relative;
+    display: inline-block;
+}
+
+.select-container::before {
+    content: "🗣️";
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+/* End of the footer section */

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="Weather App" author="Wahid Ahmad Rustaqi">
+	<meta name="description" content="The mission of this app is to provide the latest changes in weather in one click!">
+	<title>Weather APP</title>
+	<link rel="shortcut icon" href="./images/clear.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<div class="weather-search">
+			<div class="search">
+				<input list="cities" type="text" id="searchinput" placeholder="Enter the City Name">
+				<datalist id="cities">
+					<option value="New York"></option>
+					<option value="London"></option>
+					<option value="Liverpool"></option>
+					<option value="Paris"></option>
+					<option value="Dehli"></option>
+					<option value="Sydney"></option>
+					<option value="Bangkok"></option>
+				</datalist>
+				<button title="search" id="searchbtn"></button>
+			</div>
+			<div id="undefined">City not found!</div>
+			<div class="weather-info">
+				<div class="info">
+					<div id="city">Weather in Tokyo</div>
+					<div id="degree">26.52°C</div>
+				</div>
+				<div class="other-info">
+					<div class="condition">
+						<div id="icon"><img src="./images/clouds.png" alt="Cloudy weather" width="30px" height="30px"></div>
+						<div id="weather-condition">Scattered Clouds</div>
+					</div>
+					<div id="humidity">Humidity: 83%</div>
+					<div id="wind-speed">Wind speed: 8.23 km/h</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="script.js" type="text/javascript"></script>
+</body>
+</html>

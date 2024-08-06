@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Recruitment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #fff;
+            margin: 0;
+        }
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;  
+        }
+        nav {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background-color: rgb(17, 17, 17);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        nav p {
+            display: inline-block;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        nav div button {
+            text-transform: uppercase;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+            box-shadow: 1px 2px 10px rgb(207, 214, 221);
+            background-color: aqua;
+            margin: 5px;
+            cursor: pointer;
+        }
+        nav div button:hover {
+            padding: 12px;
+        }
+        .job-search {
+            text-align: center;
+            padding: 40px;
+        }
+        .job-search form input {
+            width: 500px;
+            height: 50px;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        .job-search form button {
+            padding: 15px;
+            background-color: aqua;
+            color: #fff;
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+        
+        .job-card {
+            padding: 20px;
+            width: 50rem;
+            margin: 20px auto;
+            border: 1px solid black;
+            border-radius: 30px;
+            box-shadow: 1px 2px 10px rgb(207, 214, 221);
+        }
+        .job-card-header {
+            font-size: 25px;
+            text-transform: uppercase;
+        }
+        .job-card-desc {
+            text-align: left;
+        }
+        .job-card-require {
+            text-align: left;
+        }
+
+        .job-card-location {
+            text-align: left;
+        }
+        .resultsContainer form button {
+            background-color: red;
+            margin-top: 20px;
+        }
+        footer {
+            background-color: #000;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body onload="updateButtonText()">
+    <div class="container">
+        <nav>
+            <p>JOB Recruitment</p>
+            <div>
+                <button type="button" id="home">Home</button>
+                <button type="button" id="job-post">Post a Job</button>
+                <button type="button" id="about">About</button>
+                <button type="button" id="User" title="User">User</button>
+                <button type="button" id="logout" title="logout">logout</button>
+            </div>
+        </nav>
+        <div class="job-search">
+            <form id="searchForm" action="http://localhost:3000/job-request" method="post">
+                <label for="search">Search for a job</label>
+                <input type="search" id="search" name="search">
+                <button type="submit" id="submit" name="submit" title="Search"><i class="fas fa-search"></i></button>
+            </form>
+            <div class="resultsContainer">
+                <!-- The Content of this part will be updated and added with the server -->
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2024 Job Recruitment</p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('logout').addEventListener('click', ()=> {
+            window.location.href = 'http://localhost:3000/home';
+        }) 
+        // Function to update the button text with the firstname
+        var globalFirstname = "";
+        function updateButtonText() {
+            // Get the firstname from the URL query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const firstname = urlParams.get('firstname');
+            // Select the button element
+            const button = document.getElementById("User");
+            // Update the button text with the firstname
+            
+            button.textContent = firstname;
+            return firstname;
+        }
+        globalFirstname = updateButtonText();
+        document.getElementById('home').addEventListener('click', () => {
+            window.location.href = `http://localhost:3000/employer?firstname=${globalFirstname}`;
+        })
+        document.getElementById('job-post').addEventListener('click', () => {
+            window.location.href = `http://localhost:3000/job-post?firstname=${globalFirstname}`;
+        })
+        document.getElementById('about').addEventListener('click', () => {
+            window.location.href = `http://localhost:3000/about-2?firstname=${globalFirstname}`;
+        }) 
+        const searchForm = document.getElementById('searchForm');
+        const resultsContainer = document.querySelector('.resultsContainer');
+        window.addEventListener('load', ()=> {
+            document.getElementById('submit').click();
+        })
+        searchForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const searchInput = document.getElementById('search');
+            const searchValue = searchInput.value;
+
+            try {
+                const response = await fetch('http://localhost:3000/job-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ search: searchValue }),
+                });
+
+                if (response.ok) {
+                    const jobs = await response.json();
+                    renderJobCards(jobs);
+                } else {
+                    console.error('Error:', response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+        function renderJobCards(jobs) {
+            resultsContainer.innerHTML = ''; // Clear previous results
+
+            jobs.forEach((job) => {
+                const card = document.createElement('div');
+                card.classList.add('job-card');
+                
+                const title = document.createElement('h3');
+                title.classList.add('job-card-header');
+                title.innerHTML = job.title;
+
+                const description = document.createElement('p');
+                description.classList.add('job-card-desc');
+                description.innerHTML = 'Description: <br>' + job.description;
+
+                const requirements = document.createElement('p');
+                requirements.classList.add('job-card-require');
+                requirements.innerHTML = 'Requirements: <br>' + job.requirements;
+
+                const location = document.createElement('p');
+                location.classList.add('job-card-location')
+                location.innerHTML = 'Location: <br>' + job.location;
+                const user = document.createElement('p');
+                user.classList.add('posted-user');
+                user.innerHTML = 'Posted by ' + job.hiddenUser;
+
+
+                const applybtn = document.createElement('a');
+                if(job.apply) {
+                    applybtn.href = job.apply;
+                }
+                applybtn.innerHTML =  `<button type="button" id='apply-btn'>Apply</button><br>`
+                
+                const deleteForm = document.createElement('form');
+                deleteForm.setAttribute('action', 'http://localhost:3000/delete');
+                deleteForm.setAttribute('method', 'DELETE');
+
+                const deleteInput = document.createElement('input');
+                deleteInput.type = 'hidden';
+                deleteInput.name = 'title'; // This should match the property name in your backend
+                deleteInput.value = job.title; // Assuming job.title uniquely identifies the job
+
+                const deleteButton = document.createElement('button');
+                deleteButton.type = 'submit';
+                deleteButton.textContent = 'Delete';
+
+                deleteForm.appendChild(deleteInput);
+                deleteForm.appendChild(deleteButton);
+
+                // Add an event listener to the delete form
+                deleteForm.addEventListener('submit', (event) => {
+                    event.preventDefault(); // Prevent the default form submission
+                    
+                    // Send a DELETE request to the server with the job details
+                    fetch('http://localhost:3000/delete', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ title: job.title }), // Ensure you send the correct data structure
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Job deleted successfully, you can remove the job card from the UI
+                            card.remove();
+                        } else {
+                            // Handle error
+                            console.error('Error deleting job');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+                card.appendChild(title);
+                card.appendChild(description);
+                card.appendChild(requirements);
+                card.appendChild(location);
+                card.appendChild(user)
+                card.appendChild(applybtn);
+
+                const User = document.getElementById('User');
+                if(User.textContent == job.hiddenUser) {
+                    card.appendChild(deleteForm);
+                }
+                resultsContainer.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>

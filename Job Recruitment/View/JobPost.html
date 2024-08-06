@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Recruitment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #fff;
+            margin: 0;
+        }
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;  
+        }
+        nav {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background-color: rgb(17, 17, 17);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        nav p {
+            display: inline-block;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        nav div button {
+            text-transform: uppercase;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 10px;
+            box-shadow: 1px 2px 10px rgb(207, 214, 221);
+            background-color: aqua;
+            margin: 5px;
+            cursor: pointer;
+        }
+        nav div button:hover {
+            padding: 12px;
+        }
+        form {
+          background-color: #fff;
+          width: 400px;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"], textarea {
+          width: 400px;
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+          box-sizing: border-box;
+        }
+        button[type='submit'] {
+          background-color: #58d0ff;
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+        button[type='submit']:hover {
+          background-color: #58ff6e;
+        }
+        footer {
+            background-color: #000;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+</head>
+<body onload="updateButtonText()">
+    <div class="container">
+        <nav>
+            <p>JOB Recruitment</p>
+            <div>
+                <button type="button" id="home">Home</button>
+                <button type="button" id="job-post">Post a Job</button>
+                <button type="button" id="about">About</button>
+                <button type="button" id="User" title="User"></button>
+                <button type="button" id="logout" title="Logout">logout</button>
+            </div>
+        </nav>
+        <form action="http://localhost:3000/job-post-1" method="post">
+          <h1>Post a Job</h1>
+          <label for="title">Job Title</label><br>
+          <input type="text" id="title" name="title" required><br>
+      
+          <label for="description">Job Description</label><br>
+          <textarea id="description" name="description" rows="5" required></textarea><br>
+      
+          <label for="requirements">Job Requirements</label><br>
+          <textarea id="requirements" name="requirements" rows="3" required></textarea><br>
+      
+          <label for="location">Job Location</label><br>
+          <input type="text" id="location" name="location" required><br>
+
+          <label for="apply">Apply Link</label><br>
+          <input type="text" id="apply" name="apply"><br>
+
+          <label for="hiddenUser"></label>
+          <input type="text" name="hiddenUser" id="hiddenUser" hidden></input>
+
+          <button type="submit">Post Job</button>
+        </form>
+        
+        <footer>
+            <p>&copy; 2024 Job Recruitment</p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('logout').addEventListener('click', ()=> {
+            window.location.href = 'http://localhost:3000/home';
+        }) 
+        // Function to update the button text with the firstname
+        var globalFirstname = "";
+        function updateButtonText() {
+            // Get the firstname from the URL query parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const firstname = urlParams.get('firstname');
+            // Select the button element
+            const button = document.getElementById("User");
+            
+            // Update the button text with the firstname
+            button.textContent = firstname;
+            return firstname;
+        }
+        globalFirstname = updateButtonText();
+        window.addEventListener('load', () => {
+            let hiddenUser  = document.getElementById('hiddenUser');
+            hiddenUser.value = globalFirstname;
+        })
+        document.getElementById('home').addEventListener('click', () => {
+            window.location.href = `http://localhost:3000/employer?firstname=${globalFirstname}`
+        })
+        document.getElementById('job-post').addEventListener('click', () => {
+            window.location.href = `http://localhost:3000/job-post?firstname=${globalFirstname}`;
+        })  
+        document.getElementById('about').addEventListener('click', () => {
+            window.location.href = `http://localhost:3000/about-2?firstname=${globalFirstname}`;
+        }) 
+        
+    </script>
+</body>
+</html>

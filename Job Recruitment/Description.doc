@@ -1,0 +1,55 @@
+Goal of the website: It will be a Job Recruitment website where people/users could join in and apply for jobs that are posted by employers, and employers can also join in and post their jobs.
+
+
+Things I need to do to achieve the Goal.
+
+User Management: I should create a login page this will be for authentication of the use whether it is a user or employee.
+    For the authentication of the users, I am going to have two options for the users one will be a normal user and the other will be employer, and when a user click on sign up, the default value will be sent to the database which will be normal user, and then when the user said that they are the employer, then they will be saved as an employer. The difference that I made for these two users is that the employer can post jobs and also delete only the jobs that they had posted, and the normal user can only see the jobs that are posted and they can't post a job or delete. 
+
+    Now when someone tries to login, my website will send a request for the pervious signed up data of the users, and at the same time it will go through all of the collections' data of the users and if the user has a property isEmployer as true or Yes then it will redirect to /employer page, else it will redirect to /user.
+
+    
+    There is a case when the user was not found in the database, then it will ask the user to sign up first to the website.
+
+Job listing: This is where users from different companies post their jobs on my website.
+    Now for the scenario of the employers, they are also one of the users of our website. So in the login page, they will login as users. Then in the website they have access to the job deletion where they could delete all the jobs that they had posted, whereas a normal user can only see the jobs. 
+
+    The schema or model for the job post will be:
+        --> Job Title
+        --> Description of the job
+        --> requirements of the job
+        --> Location of the job
+        --> Apply link
+        --> hiddenUser: this is the user that has posted the content, then I will give them access to delete the content they have posted.
+    After submition of this form. there will be a collection in my database, that will save this information. 
+
+Job search: This is where Job seekers search for a specific job, and get the jobs that are posted by the employers. 
+    Now for this scenario, I will have my homepage, this page will contain, basically a search bar which will take the entire width of the page. Below that search bar is the jobs that are posted by the employers. 
+    The user could go through it with or without authentication or filter the job by using keywords like;
+        --> Job title
+        --> Job Location
+        --> requirements of the job
+        --> Location of the job
+    once the user included one of the above, the specific job which matches the criteria should be retured for the user. 
+
+Data Management: This is related to the MVC architecture and the model part, where I will create some schemas for my website. 
+    Now for this part of the project, first of all I need a login/sign up schema for the structure of the data for my login/signup page. Then I need another schema for the form where the employer will post a job. 
+        Sign Up Schema: 
+            --> Name of the User
+            --> Email
+            --> Password
+            --> Confirm Password
+            --> isEmployee true/false
+        Login Schema:
+            --> Email
+            --> Password
+        Job Posting Schema:
+            --> Job Title
+            --> Job Description
+            --> Job Requirement
+            --> Job Location
+            --> Apply link
+            --> hiddenUser
+
+
+This marks the conclusion of my project. Moving forward, I plan to explore more advanced concepts and consider implementing them in my work. For now, I believe I have met all the requirements for Mini Project 3 in this course.
